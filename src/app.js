@@ -26,6 +26,14 @@ app.post("/user", async (req, res) => {
     }
 
     try {
+        let user = await User.findOne({"email": req.body.email});
+        if(user != undefined){
+            res.statusCode(400);
+            res.json({error: "E-mail já cadastrado"});
+            
+            return;
+        }
+
         let newUser = new User({
             name: req.body.name,
             email: req.body.email,
