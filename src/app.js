@@ -6,7 +6,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 mongoose.connect("mongodb://127.0.0.1:27017/guiapics").then(() => {
-    console.log("Conectado com sucesso!")
+    // console.log("Conectado com sucesso!")
 }).catch((error) => {
     console.log("Errosss: " + error)
 });
