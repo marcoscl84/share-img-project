@@ -3,6 +3,8 @@ let app = express();
 let mongoose = require("mongoose");
 let user = require("./models/user");
 let bcrypt = require("bcrypt");
+let jwt = require("jsonwebtoken");
+let jwtSecret = "umsegredoqualquerparagerarotaldotoken"
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -53,6 +55,18 @@ app.post("/user", async (req, res) => {
     }
 
 });
+
+app.post("/auth", (req, res) => {
+    let {email, password} = req.body;
+    jwt.sign({email}, jwtSecret, {expiresIn: '48h'}, (error, token) => {
+        if(error){
+            res.sendStatus(500);
+            console.log(error);
+        } else {
+            res.json({ token })
+        }
+    })
+})
 
 // Rota de exclusão de user apenas para uso em teste
 app.delete("/user", async (req, res) => {
