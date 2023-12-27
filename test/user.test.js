@@ -2,6 +2,19 @@ let app = require("../src/app");
 let supertest = require("supertest");
 let request = supertest(app);
 
+let mainUser = {name: "Marcos Conte Lima", email: "mcl@mcl.com", password: "123456"}
+
+beforeAll(() => {
+    // Inserir um usuário no banco antes de começar o teste
+    return request.post("/user").send(mainUser).then(res => {}).catch(error => { console.log(error) })
+
+});
+
+afterAll(() => {
+    // Excluir o usuário criado no banco antes de começar o teste
+    return request.delete("/user/" + mainUser.email).then(res => {}).catch(error => { console.log(error) })
+});
+
 describe("Cadastro de usuário", () => {
     test("Deve cadastrar um usuário com sucesso", () => {
 

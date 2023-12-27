@@ -54,4 +54,10 @@ app.post("/user", async (req, res) => {
 
 });
 
+// Rota de exclusão de user apenas para uso em teste
+app.delete("/user", async (req, res) => {
+    await User.deleteOne({email: req.params.email});
+    res.statusCode(200);
+});
+
 module.exports = app;
